@@ -15,5 +15,4 @@ public interface IMakerDAO {
 
     void deleteById(Long id);
 
-    void updateById(Maker maker, Long id);
 }

@@ -3,6 +3,7 @@ package com.inditex.percistence;
 import com.inditex.entities.Maker;
 import com.inditex.entities.Product;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +13,9 @@ public interface IProductDAO {
 
     List<Product> findAll();
 
+    List<Product> findByPriceInRange(BigDecimal min, BigDecimal max);
+
     void save(Product product);
 
     void deleteById(Long id);
-
-    void update(Product product, Long id);
 }
