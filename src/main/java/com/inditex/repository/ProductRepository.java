@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-    @Query("selec p from Product p WHERE p.price BETWEEN ?1 AND ?2")
+    @Query("select p from Product p WHERE p.price BETWEEN ?1 AND ?2")
     List<Product> findProductByPriceInRange(BigDecimal minPrice, BigDecimal maxPrice);
     List<Product> findProductByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
 

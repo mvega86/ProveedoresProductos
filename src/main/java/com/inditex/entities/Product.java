@@ -1,5 +1,6 @@
 package com.inditex.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,7 @@ public class Product {
     private BigDecimal price;
     @ManyToOne
     @JoinColumn(name = "id_maker")
+    @JsonIgnore
     private Maker maker;
 
 }

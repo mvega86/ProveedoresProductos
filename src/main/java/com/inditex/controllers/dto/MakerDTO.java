@@ -1,10 +1,7 @@
 package com.inditex.controllers.dto;
 
 import com.inditex.entities.Product;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;

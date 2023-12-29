@@ -28,7 +28,7 @@ public class ProductDAOImpl implements IProductDAO {
 
     @Override
     public List<Product> findByPriceInRange(BigDecimal min, BigDecimal max) {
-        return productRepo.findProductByPriceInRange(min, max);
+        return productRepo.findProductByPriceBetween(min, max);
     }
 
     @Override
