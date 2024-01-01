@@ -1,6 +1,6 @@
 package com.inditex.percistence.implementation;
 
-import com.inditex.entities.Product;
+import com.inditex.percistence.entities.Product;
 import com.inditex.percistence.IProductDAO;
 import com.inditex.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

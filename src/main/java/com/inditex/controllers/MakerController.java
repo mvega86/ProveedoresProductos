@@ -1,8 +1,10 @@
 package com.inditex.controllers;
 
-import com.inditex.controllers.dto.MakerDTO;
-import com.inditex.entities.Maker;
+import com.inditex.service.dto.MakerDTO;
+import com.inditex.percistence.entities.Maker;
 import com.inditex.service.IMakerService;
+import com.inditex.service.mapper.MakerDTOToMaker;
+import com.inditex.service.mapper.MakerToMakerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,10 @@ import java.util.Optional;
 public class MakerController {
     @Autowired
     private IMakerService makerService;
+    @Autowired
+    private MakerDTOToMaker makerDTOToMaker;
+    @Autowired
+    private MakerToMakerDTO makerToMakerDTO;
 
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
@@ -24,11 +30,7 @@ public class MakerController {
         if (makerOptional.isPresent()){
             Maker maker = makerOptional.get();
 
-            MakerDTO makerDTO = MakerDTO.builder()
-                    .id(maker.getId())
-                    .name(maker.getName())
-                    .productList(maker.getProductList())
-                    .build();
+            MakerDTO makerDTO = makerToMakerDTO.map(maker);
 
             return ResponseEntity.ok(makerDTO);
         }
@@ -40,11 +42,7 @@ public class MakerController {
     public ResponseEntity<?> findAll(){
         List<MakerDTO> makerDTOList = makerService.findAll()
                 .stream()
-                .map(maker -> MakerDTO.builder()
-                        .id(maker.getId())
-                        .name(maker.getName())
-                        .productList(maker.getProductList())
-                        .build())
+                .map(maker -> makerToMakerDTO.map(maker))
                 .toList();
         return ResponseEntity.ok(makerDTOList);
     }
@@ -55,9 +53,7 @@ public class MakerController {
             return ResponseEntity.badRequest().build();
         }
 
-        makerService.save(Maker.builder()
-                .name(makerdto.getName())
-                .build());
+        makerService.save(makerDTOToMaker.map(makerdto));
 
         return ResponseEntity.created(new URI("/api/maker/save")).build();
     }
@@ -68,8 +64,7 @@ public class MakerController {
 
         if(optionalMaker.isPresent()){
             Maker maker = optionalMaker.get();
-            maker.setName(makerDTO.getName());
-            makerService.save(maker);
+            makerService.save(makerDTOToMaker.mapExist(makerDTO, maker));
             return ResponseEntity.ok("Registro actualizado");
         }
 

@@ -1,6 +1,6 @@
-package com.inditex.controllers.dto;
+package com.inditex.service.dto;
 
-import com.inditex.entities.Maker;
+import com.inditex.percistence.entities.Maker;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

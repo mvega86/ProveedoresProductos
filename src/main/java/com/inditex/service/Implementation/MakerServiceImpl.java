@@ -1,8 +1,10 @@
 package com.inditex.service.Implementation;
 
-import com.inditex.entities.Maker;
+import com.inditex.percistence.entities.Maker;
 import com.inditex.percistence.IMakerDAO;
 import com.inditex.service.IMakerService;
+import com.inditex.service.mapper.MakerDTOToMaker;
+import com.inditex.service.mapper.MakerToMakerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ public class MakerServiceImpl implements IMakerService {
 
     @Autowired
     private IMakerDAO makerDAO;
+
     @Override
     public Optional<Maker> findById(Long id) {
         return makerDAO.findById(id);

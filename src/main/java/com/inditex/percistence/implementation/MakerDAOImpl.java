@@ -1,6 +1,6 @@
 package com.inditex.percistence.implementation;
 
-import com.inditex.entities.Maker;
+import com.inditex.percistence.entities.Maker;
 import com.inditex.percistence.IMakerDAO;
 import com.inditex.repository.MakerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

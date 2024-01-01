@@ -1,6 +1,6 @@
 package com.inditex.repository;
 
-import com.inditex.entities.Product;
+import com.inditex.percistence.entities.Product;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

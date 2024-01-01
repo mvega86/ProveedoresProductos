@@ -1,6 +1,6 @@
 package com.inditex.percistence;
 
-import com.inditex.entities.Maker;
+import com.inditex.percistence.entities.Maker;
 
 import java.util.List;
 import java.util.Optional;

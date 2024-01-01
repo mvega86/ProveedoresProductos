@@ -1,6 +1,6 @@
 package com.inditex.service;
 
-import com.inditex.entities.Product;
+import com.inditex.percistence.entities.Product;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -1,8 +1,6 @@
 package com.inditex.repository;
 
-import com.inditex.entities.Maker;
-import jakarta.persistence.Id;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.inditex.percistence.entities.Maker;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,10 @@
 package com.inditex.controllers;
 
-import com.inditex.controllers.dto.MakerDTO;
-import com.inditex.controllers.dto.ProductDTO;
-import com.inditex.entities.Product;
+import com.inditex.service.dto.ProductDTO;
+import com.inditex.percistence.entities.Product;
 import com.inditex.service.IProductService;
+import com.inditex.service.mapper.ProductDTOToProduct;
+import com.inditex.service.mapper.ProductToProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,10 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
+    @Autowired
+    private ProductDTOToProduct productDTOToProduct;
+    @Autowired
+    private ProductToProductDTO productToProductDTO;
 
 @GetMapping("find/{id}")
 public ResponseEntity<?> findById(@PathVariable Long id){
@@ -27,12 +32,7 @@ public ResponseEntity<?> findById(@PathVariable Long id){
 
     if(productOptional.isPresent()){
         Product product = productOptional.get();
-        ProductDTO productDTO = ProductDTO.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .price(product.getPrice())
-                .maker(product.getMaker())
-                .build();
+        ProductDTO productDTO = productToProductDTO.map(product);
 
         return ResponseEntity.ok(productDTO);
     }
@@ -43,12 +43,7 @@ public ResponseEntity<?> findById(@PathVariable Long id){
 public ResponseEntity<?> findAll(){
     List<ProductDTO> productDTOList = productService.findAll()
             .stream()
-            .map(product -> ProductDTO.builder()
-                    .id(product.getId())
-                    .name(product.getName())
-                    .price(product.getPrice())
-                    .maker(product.getMaker())
-                    .build())
+            .map(product -> productToProductDTO.map(product))
             .toList();
     return ResponseEntity.ok(productDTOList);
 }
@@ -59,11 +54,7 @@ public ResponseEntity<?> save(@RequestBody ProductDTO productDTO) throws URISynt
         return ResponseEntity.badRequest().build();
     }
 
-    productService.save(Product.builder()
-            .name(productDTO.getName())
-            .price(productDTO.getPrice())
-            .maker(productDTO.getMaker())
-            .build());
+    productService.save(productDTOToProduct.map(productDTO));
 
     return ResponseEntity.created(new URI("/api/product/save")).build();
 }
@@ -74,9 +65,7 @@ public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProductDTO p
 
     if(optionalProduct.isPresent()){
         Product product = optionalProduct.get();
-        product.setName(productDTO.getName());
-        product.setPrice(productDTO.getPrice());
-        productService.save(product);
+        productService.save(productDTOToProduct.mapExist(productDTO,product));
 
         return ResponseEntity.ok("Registro actualizado");
     }
@@ -102,12 +91,7 @@ public ResponseEntity<?> findByRange(@PathVariable BigDecimal min, @PathVariable
     }
     List<ProductDTO> productDTOList = productService.findByPriceInRange(min, max)
             .stream()
-            .map(product -> ProductDTO.builder()
-                    .id(product.getId())
-                    .name(product.getName())
-                    .price(product.getPrice())
-                    .maker(product.getMaker())
-                    .build())
+            .map(product -> productToProductDTO.map(product))
             .toList();
     return ResponseEntity.ok(productDTOList);
 }

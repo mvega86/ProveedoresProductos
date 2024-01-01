@@ -1,6 +1,6 @@
-package com.inditex.controllers.dto;
+package com.inditex.service.dto;
 
-import com.inditex.entities.Product;
+import com.inditex.percistence.entities.Product;
 import lombok.*;
 
 import java.util.ArrayList;
