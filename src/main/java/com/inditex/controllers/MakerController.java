@@ -64,6 +64,8 @@ public class MakerController {
 
         if(optionalMaker.isPresent()){
             Maker maker = optionalMaker.get();
+            makerDTO.setId(maker.getId());
+            makerDTO.setProductList(maker.getProductList());
             makerService.save(makerDTOToMaker.mapExist(makerDTO, maker));
             return ResponseEntity.ok("Registro actualizado");
         }

@@ -65,6 +65,8 @@ public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProductDTO p
 
     if(optionalProduct.isPresent()){
         Product product = optionalProduct.get();
+        productDTO.setId(product.getId());
+        productDTO.setMaker(product.getMaker());
         productService.save(productDTOToProduct.mapExist(productDTO,product));
 
         return ResponseEntity.ok("Registro actualizado");
